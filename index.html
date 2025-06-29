@@ -166,14 +166,14 @@
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .stat-item {
             text-align: center;
-            margin: 10px;
+            margin: 0;
         }
 
         .stat-label {
@@ -266,10 +266,12 @@
 
         @media (max-width: 480px) {
             .statistik-container {
-                flex-direction: column;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                padding: 15px;
             }
             .stat-item {
-                margin: 5px 0;
+                margin: 0;
             }
             .detail-item {
                 padding: 10px;
