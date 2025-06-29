@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Matematika</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1, h2 {
+            color: #0056b3;
+            margin-bottom: 25px;
+        }
+        .btn-operasi {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-operasi:hover {
+            background-color: #0056b3;
+        }
+        .layar label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-align: left;
+        }
+        .layar input, .layar select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        #mulai-kuis-btn, #submit-jawaban-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+        #mulai-kuis-btn:hover, #submit-jawaban-btn:hover {
+            background-color: #218838;
+        }
+        .btn-kembali {
+            background-color: #6c757d;
+            color: white;
+            margin-top: 15px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-kembali:hover {
+            background-color: #5a6268;
+        }
+        #layar-kuis .info-kuis {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+        #pertanyaan {
+            font-size: 36px;
+            font-weight: 600;
+            margin: 40px 0;
+            color: #0056b3;
+        }
+        #input-jawaban {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #skor-akhir {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        #pesan-hasil {
+            font-size: 18px;
+            color: #28a745;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="menu-utama">
+            <h1>Operasi Matematika Dasar</h1>
+            <button id="btn-penjumlahan" class="btn-operasi">Penjumlahan</button>
+            <button id="btn-pengurangan" class="btn-operasi">Pengurangan</button>
+            <button id="btn-perkalian" class="btn-operasi">Perkalian</button>
+            <button id="btn-pembagian" class="btn-operasi">Pembagian</button>
+        </div>
+        <div id="pengaturan-kuis" class="layar" style="display: none;">
+            <h2 id="judul-pengaturan">Pengaturan Kuis</h2>
+            <div id="opsi-perkalian" style="display: none;">
+                <label for="pilih-perkalian">Pilih mode perkalian:</label>
+                <select id="pilih-perkalian">
+                    <option value="random">Digit Angka (Kustom)</option>
+                    <option value="tabel">Tabel Perkalian (1-9)</option>
+                </select>
+            </div>
+            <div id="pengaturan-tabel-perkalian" style="display: none;">
+                 <label for="angka-perkalian">Perkalian angka:</label>
+                 <select id="angka-perkalian">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                 </select>
+            </div>
+            <div id="pengaturan-digit-kustom">
+                <label for="digit-angka1">Jumlah digit angka pertama:</label>
+                <select id="digit-angka1">
+                    <option value="1">1 Digit (0-9)</option>
+                    <option value="2">2 Digit (10-99)</option>
+                    <option value="3">3 Digit (100-999)</option>
+                    <option value="3">4 Digit (1000-9999)</option>
+                    <option value="3">5 Digit (10000-99999)</option>
+                </select>
+                <label for="digit-angka2">Jumlah digit angka kedua:</label>
+                <select id="digit-angka2">
+                    <option value="1">1 Digit (0-9)</option>
+                    <option value="2">2 Digit (10-99)</option>
+                    <option value="3">3 Digit (100-999)</option>
+                    <option value="3">4 Digit (1000-9999)</option>
+                    <option value="3">5 Digit (10000-99999)</option>
+                </select>
+            </div>
+            <label for="jumlah-soal">Jumlah soal:</label>
+            <input type="number" id="jumlah-soal" value="10" min="1" max="50">
+            <label for="waktu-soal">Waktu per soal (detik):</label>
+            <input type="number" id="waktu-soal" value="15" min="5" max="60">
+            <button id="mulai-kuis-btn">Mulai Kuis</button>
+            <button id="kembali-ke-menu-1" class="btn-kembali">Kembali</button>
+        </div>
+        <div id="layar-kuis" class="layar" style="display: none;">
+            <div class="info-kuis">
+                <span id="info-soal">Progres Soal</span>
+                <span id="sisa-waktu">Sisa Waktu</span>
+            </div>
+            <div id="pertanyaan">Pertanyaan</div>
+            <input type="number" id="input-jawaban" placeholder="Ketik jawabanmu...">
+            <button id="submit-jawaban-btn">Jawab</button>
+        </div>
+        <div id="layar-hasil" class="layar" style="display: none;">
+            <h2>Kuis Selesai!</h2>
+            <p id="skor-akhir">Skor Akhir</p>
+            <p id="pesan-hasil"></p>
+            <button id="kembali-ke-menu-2" class="btn-kembali">Kembali ke Menu Utama</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuUtama = document.getElementById('menu-utama');
+            const pengaturanKuis = document.getElementById('pengaturan-kuis');
+            const layarKuis = document.getElementById('layar-kuis');
+            const layarHasil = document.getElementById('layar-hasil');
+            const btnOperasi = document.querySelectorAll('.btn-operasi');
+            const mulaiKuisBtn = document.getElementById('mulai-kuis-btn');
+            const submitJawabanBtn = document.getElementById('submit-jawaban-btn');
+            const btnKembali = document.querySelectorAll('.btn-kembali');
+            const judulPengaturan = document.getElementById('judul-pengaturan');
+            const opsiPerkalian = document.getElementById('opsi-perkalian');
+            const pilihPerkalian = document.getElementById('pilih-perkalian');
+            const pengaturanTabelPerkalian = document.getElementById('pengaturan-tabel-perkalian');
+            const pengaturanDigitKustom = document.getElementById('pengaturan-digit-kustom');
+            let operasiSaatIni = '';
+            let soalKuis = [];
+            let soalKe = 0;
+            let skor = 0;
+            let timer;
+            let waktuPerSoal;
+            function tampilkanLayar(layar) {
+                document.querySelectorAll('.layar').forEach(l => l.style.display = 'none');
+                menuUtama.style.display = 'none';
+                layar.style.display = 'block';
+            }
+            btnOperasi.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    operasiSaatIni = btn.id.split('-')[1];
+                    judulPengaturan.textContent = `Pengaturan ${operasiSaatIni.charAt(0).toUpperCase() + operasiSaatIni.slice(1)}`;
+                    if (operasiSaatIni === 'perkalian') {
+                        opsiPerkalian.style.display = 'block';
+                        pilihPerkalian.dispatchEvent(new Event('change'));
+                        if (pilihPerkalian.value !== 'tabel') {
+                            pengaturanDigitKustom.style.display = 'block';
+                        }
+                    } else {
+                        opsiPerkalian.style.display = 'none';
+                        pengaturanDigitKustom.style.display = (operasiSaatIni === 'penjumlahan' || operasiSaatIni === 'pengurangan') ? 'block' : 'none';
+                    }
+                    tampilkanLayar(pengaturanKuis);
+                });
+            });
+            pilihPerkalian.addEventListener('change', () => {
+                if (pilihPerkalian.value === 'tabel') {
+                    pengaturanTabelPerkalian.style.display = 'block';
+                    pengaturanDigitKustom.style.display = 'none';
+                } else {
+                    pengaturanTabelPerkalian.style.display = 'none';
+                    pengaturanDigitKustom.style.display = 'block';
+                }
+            });
+            function buatAngkaRandom(digit) {
+                const min = Math.pow(10, digit - 1);
+                const max = Math.pow(10, digit) - 1;
+                if (digit == 1) return Math.floor(Math.random() * 10);
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            function buatSoal() {
+                soalKuis = [];
+                const jumlahSoal = parseInt(document.getElementById('jumlah-soal').value);
+                for (let i = 0; i < jumlahSoal; i++) {
+                    let angka1, angka2, soal, jawaban;
+                    switch (operasiSaatIni) {
+                        case 'penjumlahan':
+                            const digitAngka1Plus = parseInt(document.getElementById('digit-angka1').value);
+                            const digitAngka2Plus = parseInt(document.getElementById('digit-angka2').value);
+                            angka1 = buatAngkaRandom(digitAngka1Plus);
+                            angka2 = buatAngkaRandom(digitAngka2Plus);
+                            soal = `${angka1} + ${angka2} = ?`;
+                            jawaban = angka1 + angka2;
+                            break;
+                        case 'pengurangan':
+                            const digitAngka1Minus = parseInt(document.getElementById('digit-angka1').value);
+                            const digitAngka2Minus = parseInt(document.getElementById('digit-angka2').value);
+                            angka1 = buatAngkaRandom(digitAngka1Minus);
+                            angka2 = buatAngkaRandom(digitAngka2Minus);
+                            if (angka1 < angka2) [angka1, angka2] = [angka2, angka1];
+                            soal = `${angka1} - ${angka2} = ?`;
+                            jawaban = angka1 - angka2;
+                            break;
+                        case 'perkalian':
+                            if (pilihPerkalian.value === 'tabel') {
+                                angka1 = parseInt(document.getElementById('angka-perkalian').value);
+                                angka2 = Math.floor(Math.random() * 10) + 1;
+                            } else {
+                                const digitAngka1Kali = parseInt(document.getElementById('digit-angka1').value);
+                                const digitAngka2Kali = parseInt(document.getElementById('digit-angka2').value);
+                                angka1 = buatAngkaRandom(digitAngka1Kali);
+                                angka2 = buatAngkaRandom(digitAngka2Kali);
+                            }
+                            soal = `${angka1} × ${angka2} = ?`;
+                            jawaban = angka1 * angka2;
+                            break;
+                        case 'pembagian':
+                            const pembagi = buatAngkaRandom(1) + 1;
+                            const hasil = buatAngkaRandom(1) + 1;
+                            angka1 = pembagi * hasil;
+                            angka2 = pembagi;
+                            soal = `${angka1} ÷ ${angka2} = ?`;
+                            jawaban = hasil;
+                            break;
+                    }
+                    soalKuis.push({ soal, jawaban });
+                }
+            }
+            mulaiKuisBtn.addEventListener('click', () => {
+                waktuPerSoal = parseInt(document.getElementById('waktu-soal').value);
+                soalKe = 0;
+                skor = 0;
+                buatSoal();
+                tampilkanLayar(layarKuis);
+                tampilkanSoalBerikutnya();
+            });
+            function tampilkanSoalBerikutnya() {
+                if (soalKe < soalKuis.length) {
+                    document.getElementById('pertanyaan').textContent = soalKuis[soalKe].soal;
+                    document.getElementById('input-jawaban').value = '';
+                    document.getElementById('input-jawaban').focus();
+                    document.getElementById('info-soal').textContent = `Soal: ${soalKe + 1}/${soalKuis.length}`;
+                    mulaiTimer();
+                } else {
+                    selesaikanKuis();
+                }
+            }
+            function mulaiTimer() {
+                clearInterval(timer);
+                let sisaWaktu = waktuPerSoal;
+                const timerDisplay = document.getElementById('sisa-waktu');
+                timerDisplay.textContent = `Waktu: ${sisaWaktu}s`;
+                timer = setInterval(() => {
+                    sisaWaktu--;
+                    timerDisplay.textContent = `Waktu: ${sisaWaktu}s`;
+                    if (sisaWaktu <= 0) {
+                        clearInterval(timer);
+                        cekJawaban(true);
+                    }
+                }, 1000);
+            }
+            function cekJawaban(waktuHabis = false) {
+                clearInterval(timer);
+                const jawabanPengguna = parseInt(document.getElementById('input-jawaban').value);
+                if (!waktuHabis && jawabanPengguna === soalKuis[soalKe].jawaban) {
+                    skor++;
+                }
+                soalKe++;
+                tampilkanSoalBerikutnya();
+            }
+            submitJawabanBtn.addEventListener('click', () => cekJawaban());
+            document.getElementById('input-jawaban').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    cekJawaban();
+                }
+            });
+            function selesaikanKuis() {
+                tampilkanLayar(layarHasil);
+                document.getElementById('skor-akhir').textContent = `Skor kamu: ${skor} dari ${soalKuis.length}`;
+                const persentase = (skor / soalKuis.length) * 100;
+                const pesanHasil = document.getElementById('pesan-hasil');
+                if (persentase >= 80) {
+                    pesanHasil.textContent = "Luar Biasa! Terus pertahankan!";
+                    pesanHasil.style.color = "#28a745";
+                } else if (persentase >= 50) {
+                    pesanHasil.textContent = "Bagus! Terus berlatih lagi ya!";
+                    pesanHasil.style.color = "#ffc107";
+                } else {
+                    pesanHasil.textContent = "Jangan menyerah, coba lagi!";
+                    pesanHasil.style.color = "#dc3545";
+                }
+            }
+            btnKembali.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    clearInterval(timer);
+                    tampilkanLayar(menuUtama);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
