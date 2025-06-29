@@ -689,13 +689,18 @@
             function createConfetti() {
                 const colors = ['red', 'blue', 'yellow', 'green', 'purple', 'orange'];
                 const confettiCount = 100;
+                
+                const circularProgress = document.querySelector('.circular-progress');
+                const rect = circularProgress.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
 
                 for (let i = 0; i < confettiCount; i++) {
                     const confetti = document.createElement('div');
                     confetti.className = `confetti confetti-${colors[Math.floor(Math.random() * colors.length)]}`;
         
-                    confetti.style.left = `50%`;
-                    confetti.style.bottom = `0`;
+                    confetti.style.left = `${centerX}px`;
+                    confetti.style.top = `${centerY}px`;
         
                     const spread = (Math.random() - 0.5) * 400; // Penyebaran horizontal (-200px sampai 200px)
                     const rotate = (Math.random() - 0.5) * 720; // Rotasi acak (-360deg sampai 360deg)
